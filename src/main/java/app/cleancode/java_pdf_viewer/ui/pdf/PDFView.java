@@ -6,7 +6,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
+import com.itextpdf.kernel.pdf.PdfCatalog;
+import com.itextpdf.kernel.pdf.PdfDictionary;
 import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfOutline;
 import com.itextpdf.kernel.pdf.PdfReader;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -98,5 +101,17 @@ public class PDFView extends HBox {
 
     public int getCurrentPage() {
         return currentPage;
+    }
+
+    public PdfOutline getOutline() {
+        return pdf.getOutlines(true);
+    }
+
+    public PdfCatalog getCatalog() {
+        return pdf.getCatalog();
+    }
+
+    public int getPageNumber(PdfDictionary dictionary) {
+        return pdf.getPageNumber(dictionary);
     }
 }
