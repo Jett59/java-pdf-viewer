@@ -1,5 +1,6 @@
 package app.cleancode.java_pdf_viewer.ui.pdf;
 
+import app.cleancode.java_pdf_viewer.parser.TextGenerator;
 import app.cleancode.java_pdf_viewer.ui.Main;
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,7 +28,7 @@ public class PDFView extends TextArea {
             fileIn = new FileInputStream(file);
             pdfReader = new PdfReader(fileIn);
             pdf = new PdfDocument(pdfReader);
-            INSTANCE.set(new PDFView(pdf));
+            INSTANCE.setValue(new PDFView(pdf));
         } catch (Exception e) {
             e.printStackTrace();
             if (fileIn != null) {
@@ -51,10 +52,18 @@ public class PDFView extends TextArea {
     }
 
     private final PdfDocument pdf;
+    private final TextGenerator textGenerator;
 
-    public PDFView(PdfDocument pdf) {
+    public PDFView(PdfDocument pdf) throws Exception {
         this.pdf = pdf;
-        System.out.println(pdf.getNumberOfPages());
+        textGenerator = new TextGenerator();
         super.setEditable(false);
+        selectPage(1);
+    }
+
+    public void selectPage(int page) throws Exception {
+        if (pdf.getNumberOfPages() >= page) {
+            setText(textGenerator.getText(pdf.getPage(page)));
+        }
     }
 }

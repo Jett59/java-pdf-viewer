@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.AccessibleRole;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
@@ -25,7 +26,7 @@ public class Main extends Application {
         toolbar.setAccessibleRole(AccessibleRole.TOOL_BAR);
         BorderPane root = new BorderPane();
         root.setTop(toolbar);
-        PDFView.INSTANCE.addListener((observable, newValue, oldValue) -> {
+        PDFView.INSTANCE.addListener((observable, oldValue, newValue) -> {
             root.setCenter(newValue);
         });
         primaryStage.setScene(new Scene(root));
