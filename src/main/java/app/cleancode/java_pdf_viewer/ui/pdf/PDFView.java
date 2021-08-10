@@ -10,11 +10,14 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
-public class PDFView extends TextArea {
+public class PDFView extends HBox {
     public static ObjectProperty<PDFView> INSTANCE = new SimpleObjectProperty<>();
 
     public static void open() {
@@ -51,19 +54,43 @@ public class PDFView extends TextArea {
         }
     }
 
+    private final TextArea pdfText;
     private final PdfDocument pdf;
     private final TextGenerator textGenerator;
+    private int currentPage;
 
     public PDFView(PdfDocument pdf) throws Exception {
+        this.pdfText = new TextArea();
         this.pdf = pdf;
         textGenerator = new TextGenerator();
-        super.setEditable(false);
+        pdfText.setEditable(false);
         selectPage(1);
+        Button previous = new Button("Previous Page");
+        Button next = new Button("next Page");
+        previous.setOnAction(evt -> selectPage(currentPage - 1));
+        next.setOnAction(evt -> selectPage(currentPage + 1));
+        setAlignment(Pos.TOP_CENTER);
+        getChildren().add(previous);
+        getChildren().add(pdfText);
+        getChildren().add(next);
     }
 
-    public void selectPage(int page) throws Exception {
+    public void selectPage(int page) {
         if (pdf.getNumberOfPages() >= page) {
-            setText(textGenerator.getText(pdf.getPage(page)));
+            try {
+                pdfText.setText(textGenerator.getText(pdf.getPage(page)));
+                currentPage = page;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    public int getNumberOfPages() {
+        return pdf.getNumberOfPages();
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
     }
 }
