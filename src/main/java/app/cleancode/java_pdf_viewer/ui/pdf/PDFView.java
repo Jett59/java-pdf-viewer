@@ -65,10 +65,16 @@ public class PDFView extends HBox {
         textGenerator = new TextGenerator();
         pdfText.setEditable(false);
         selectPage(1);
-        Button previous = new Button("Previous Page");
-        Button next = new Button("next Page");
-        previous.setOnAction(evt -> selectPage(currentPage - 1));
-        next.setOnAction(evt -> selectPage(currentPage + 1));
+        Button previous = new Button("_Previous Page");
+        Button next = new Button("_Next Page");
+        previous.setOnAction(evt -> {
+            pdfText.requestFocus();
+            selectPage(currentPage - 1);
+        });
+        next.setOnAction(evt -> {
+            pdfText.requestFocus();
+            selectPage(currentPage + 1);
+        });
         setAlignment(Pos.TOP_CENTER);
         getChildren().add(previous);
         getChildren().add(pdfText);
