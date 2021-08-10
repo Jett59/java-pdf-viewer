@@ -82,7 +82,7 @@ public class PDFView extends HBox {
     }
 
     public void selectPage(int page) {
-        if (pdf.getNumberOfPages() >= page) {
+        if (pdf.getNumberOfPages() >= page && page > 0) {
             try {
                 pdfText.setText(textGenerator.getText(pdf.getPage(page)));
                 currentPage = page;
