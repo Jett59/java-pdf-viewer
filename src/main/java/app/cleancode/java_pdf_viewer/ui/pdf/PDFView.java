@@ -71,11 +71,9 @@ public class PDFView extends HBox {
         Button previous = new Button("_Previous Page");
         Button next = new Button("_Next Page");
         previous.setOnAction(evt -> {
-            pdfText.requestFocus();
             selectPage(currentPage - 1);
         });
         next.setOnAction(evt -> {
-            pdfText.requestFocus();
             selectPage(currentPage + 1);
         });
         setAlignment(Pos.TOP_CENTER);
@@ -87,6 +85,7 @@ public class PDFView extends HBox {
     public void selectPage(int page) {
         if (pdf.getNumberOfPages() >= page && page > 0) {
             try {
+                pdfText.requestFocus();
                 pdfText.setText(textGenerator.getText(pdf.getPage(page)));
                 currentPage = page;
             } catch (Exception e) {
