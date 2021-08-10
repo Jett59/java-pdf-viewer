@@ -3,6 +3,7 @@ package app.cleancode.java_pdf_viewer.ui;
 import app.cleancode.java_pdf_viewer.ui.pdf.PDFView;
 import app.cleancode.java_pdf_viewer.ui.toolbar.ToolbarView;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.AccessibleRole;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
