@@ -1,6 +1,7 @@
 package app.cleancode.java_pdf_viewer.ui.pdf;
 
 import app.cleancode.java_pdf_viewer.parser.TextGenerator;
+import app.cleancode.java_pdf_viewer.prefs.PreferenceManager;
 import app.cleancode.java_pdf_viewer.ui.Main;
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,6 +24,16 @@ import javafx.stage.FileChooser.ExtensionFilter;
 public class PDFView extends HBox {
     public static ObjectProperty<PDFView> INSTANCE = new SimpleObjectProperty<>();
 
+    static {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            if (INSTANCE.get() != null) {
+                PreferenceManager.put(PreferenceManager.LAST_DOCUMENT, INSTANCE.get().path);
+                PreferenceManager.put(PreferenceManager.LAST_PAGE_NUMBER,
+                        INSTANCE.get().currentPage);
+            }
+        }));
+    }
+
     public static void open() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setSelectedExtensionFilter(new ExtensionFilter("PDF", List.of("pdf")));
@@ -34,7 +45,7 @@ public class PDFView extends HBox {
             fileIn = new FileInputStream(file);
             pdfReader = new PdfReader(fileIn);
             pdf = new PdfDocument(pdfReader);
-            INSTANCE.setValue(new PDFView(pdf));
+            INSTANCE.setValue(new PDFView(pdf, file.getAbsolutePath()));
             Main.top.setTitle(file.getName() + " - PDF Viewer");
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,9 +73,11 @@ public class PDFView extends HBox {
     private final PdfDocument pdf;
     private final TextGenerator textGenerator;
     private int currentPage;
+    private String path;
 
-    public PDFView(PdfDocument pdf) throws Exception {
+    public PDFView(PdfDocument pdf, String path) throws Exception {
         this.pdfText = new TextArea();
+        this.path = path;
         this.pdf = pdf;
         textGenerator = new TextGenerator();
         pdfText.setEditable(false);
