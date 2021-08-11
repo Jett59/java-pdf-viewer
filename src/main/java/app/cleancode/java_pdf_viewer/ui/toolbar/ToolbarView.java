@@ -54,11 +54,15 @@ public class ToolbarView extends MenuBar {
     }
 
     private void addOutlineElements(Menu outlineMenu, PdfOutline outline) {
-        MenuItem outlineItem;
+        Menu outlineSubMenu = null;
+        MenuItem outlineItem = new MenuItem();
         if (outline.getAllChildren() != null && !outline.getAllChildren().isEmpty()) {
-            outlineItem = new Menu();
+            outlineSubMenu = new Menu();
+            outlineMenu.getItems().add(outlineSubMenu);
+            outlineSubMenu.getItems().add(outlineItem);
+            outlineSubMenu.textProperty().bind(outlineItem.textProperty());
         } else {
-            outlineItem = new MenuItem();
+            outlineMenu.getItems().add(outlineItem);
         }
         int page = PDFView.INSTANCE.get()
                 .getPageNumber((PdfDictionary) outline.getDestination().getDestinationPage(
@@ -67,11 +71,10 @@ public class ToolbarView extends MenuBar {
         outlineItem.setOnAction(evt -> {
             PDFView.INSTANCE.get().selectPage(page);
         });
-        outlineMenu.getItems().add(outlineItem);
         List<PdfOutline> children = outline.getAllChildren();
-        if (children != null) {
+        if (outlineSubMenu != null) {
             for (PdfOutline child : children) {
-                addOutlineElements((Menu) outlineItem, child);
+                addOutlineElements(outlineSubMenu, child);
             }
         }
     }
