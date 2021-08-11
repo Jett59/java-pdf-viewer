@@ -9,9 +9,11 @@ import javafx.scene.control.Dialog;
 public abstract class DialogueViewBase {
     private Dialog<ButtonType> dialog;
 
-    public DialogueViewBase(double width, double height, ButtonType... buttonTypes) {
+    public DialogueViewBase(String title, String content, ButtonType... buttonTypes) {
         try {
             dialog = new Dialog<>();
+            dialog.setTitle(title);
+            dialog.setContentText(content);
             dialog.getDialogPane().getButtonTypes().addAll(buttonTypes);
             dialog.getDialogPane().getChildren().add(getRoot());
             dialog.showAndWait();
