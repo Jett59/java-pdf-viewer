@@ -35,6 +35,7 @@ public class PDFView extends HBox {
             pdfReader = new PdfReader(fileIn);
             pdf = new PdfDocument(pdfReader);
             INSTANCE.setValue(new PDFView(pdf));
+            Main.top.setTitle(file.getName() + " - PDF Viewer");
         } catch (Exception e) {
             e.printStackTrace();
             if (fileIn != null) {
