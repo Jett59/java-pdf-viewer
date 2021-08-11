@@ -17,15 +17,15 @@ public class PreferenceManager {
         preferences.putInt(key, value);
     }
 
-    public String getString(String key) {
+    public static String getString(String key) {
         return preferences.get(key, "");
     }
 
-    public int getInt(String key) {
+    public static int getInt(String key) {
         return preferences.getInt(key, 0);
     }
 
-    public boolean isPresent(String key) {
+    public static boolean isPresent(String key) {
         return preferences.get(key, null) != null;
     }
 }

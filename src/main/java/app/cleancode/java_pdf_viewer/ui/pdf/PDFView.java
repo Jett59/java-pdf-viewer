@@ -38,6 +38,10 @@ public class PDFView extends HBox {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setSelectedExtensionFilter(new ExtensionFilter("PDF", List.of("pdf")));
         File file = fileChooser.showOpenDialog(Main.top);
+        open(file);
+    }
+
+    public static void open(File file) {
         FileInputStream fileIn = null;
         PdfReader pdfReader = null;
         PdfDocument pdf = null;
@@ -67,6 +71,7 @@ public class PDFView extends HBox {
                 }
             }
         }
+
     }
 
     private final TextArea pdfText;

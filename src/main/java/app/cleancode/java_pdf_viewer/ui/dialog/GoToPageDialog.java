@@ -7,7 +7,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 
-public class GoToPageDialog extends DialogueViewBase {
+public class GoToPageDialog extends DialogViewBase {
     public static ButtonType GO_BUTTON = new ButtonType("Go", ButtonData.OK_DONE);
 
     public GoToPageDialog() {

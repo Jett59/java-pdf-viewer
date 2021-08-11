@@ -1,7 +1,9 @@
 package app.cleancode.java_pdf_viewer.ui;
 
+import app.cleancode.java_pdf_viewer.prefs.PreferenceManager;
 import app.cleancode.java_pdf_viewer.ui.pdf.PDFView;
 import app.cleancode.java_pdf_viewer.ui.toolbar.ToolbarView;
+import java.io.File;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.AccessibleRole;
@@ -32,6 +34,11 @@ public class Main extends Application {
         primaryStage.setTitle("Pdf Viewer");
         primaryStage.setMaximized(true);
         primaryStage.show();
+        if (PreferenceManager.isPresent(PreferenceManager.LAST_DOCUMENT)) {
+            PDFView.open(new File(PreferenceManager.getString(PreferenceManager.LAST_DOCUMENT)));
+            PDFView.INSTANCE.get()
+                    .selectPage(PreferenceManager.getInt(PreferenceManager.LAST_PAGE_NUMBER));
+        }
     }
 
 }

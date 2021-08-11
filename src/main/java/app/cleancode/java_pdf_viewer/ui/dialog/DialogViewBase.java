@@ -6,10 +6,10 @@ import javafx.scene.Parent;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 
-public abstract class DialogueViewBase {
+public abstract class DialogViewBase {
     private Dialog<ButtonType> dialog;
 
-    public DialogueViewBase(String title, String content, ButtonType... buttonTypes) {
+    public DialogViewBase(String title, String content, ButtonType... buttonTypes) {
         try {
             dialog = new Dialog<>();
             dialog.setTitle(title);
