@@ -7,45 +7,53 @@ import java.util.List;
 import com.itextpdf.kernel.pdf.PdfDictionary;
 import com.itextpdf.kernel.pdf.PdfName;
 import com.itextpdf.kernel.pdf.PdfOutline;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.HBox;
 
-public class ToolbarView extends HBox {
+public class ToolbarView extends MenuBar {
     public ToolbarView() {
-        Button open = new Button("Open");
+        MenuItem open = new MenuItem();
+        open.setText("Open");
         open.setOnAction(evt -> PDFView.open());
         Main.top.getScene().getAccelerators().put(
                 new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN), () -> open.fire());
-        MenuButton outlineButton = new MenuButton("Document _Outline");
+        Menu outlineMenu = new Menu();
+        outlineMenu.setText("Document Outline");
         PDFView.INSTANCE.addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                outlineButton.getItems().clear();
+                outlineMenu.getItems().clear();
                 List<PdfOutline> outlines = newValue.getOutline().getAllChildren();
                 for (PdfOutline outline : outlines) {
-                    addOutlineElements(outlineButton, outline);
+                    addOutlineElements(outlineMenu, outline);
                 }
             }
         });
-        Button goToPage = new Button("Jump to Page");
+        Menu goTo = new Menu();
+        goTo.setText("Go to");
+        MenuItem goToPage = new MenuItem();
+        goToPage.setText("Page");
         goToPage.setOnAction(evt -> {
             new GoToPageDialog();
         });
         Main.top.getScene().getAccelerators().put(
                 new KeyCodeCombination(KeyCode.G, KeyCombination.SHORTCUT_DOWN),
                 () -> goToPage.fire());
-        getChildren().add(open);
-        getChildren().add(outlineButton);
-        getChildren().add(goToPage);
-        setAlignment(Pos.TOP_CENTER);
+        Menu fileMenu = new Menu("File");
+        fileMenu.getItems().add(open);
+        Menu viewMenu = new Menu("View");
+        viewMenu.getItems().add(outlineMenu);
+        viewMenu.getItems().add(goTo);
+        goTo.getItems().add(goToPage);
+        super.getMenus().add(fileMenu);
+        super.getMenus().add(viewMenu);
+        super.setFocusTraversable(true);
     }
 
-    private void addOutlineElements(MenuButton outlineButton, PdfOutline outline) {
+    private void addOutlineElements(Menu outlineMenu, PdfOutline outline) {
         MenuItem outlineItem = new MenuItem();
         int page = PDFView.INSTANCE.get()
                 .getPageNumber((PdfDictionary) outline.getDestination().getDestinationPage(
@@ -54,11 +62,11 @@ public class ToolbarView extends HBox {
         outlineItem.setOnAction(evt -> {
             PDFView.INSTANCE.get().selectPage(page);
         });
-        outlineButton.getItems().add(outlineItem);
+        outlineMenu.getItems().add(outlineItem);
         List<PdfOutline> children = outline.getAllChildren();
         if (children != null) {
             for (PdfOutline child : children) {
-                addOutlineElements(outlineButton, child);
+                addOutlineElements(outlineMenu, child);
             }
         }
     }
