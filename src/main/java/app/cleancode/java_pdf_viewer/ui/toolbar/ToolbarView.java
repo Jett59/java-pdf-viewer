@@ -1,5 +1,6 @@
 package app.cleancode.java_pdf_viewer.ui.toolbar;
 
+import app.cleancode.java_pdf_viewer.ui.Main;
 import app.cleancode.java_pdf_viewer.ui.dialog.GoToPageDialog;
 import app.cleancode.java_pdf_viewer.ui.pdf.PDFView;
 import java.util.List;
@@ -10,12 +11,17 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.HBox;
 
 public class ToolbarView extends HBox {
     public ToolbarView() {
         Button open = new Button("Open");
         open.setOnAction(evt -> PDFView.open());
+        Main.top.getScene().getAccelerators().put(
+                new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN), () -> open.fire());
         MenuButton outlineButton = new MenuButton("Document _Outline");
         PDFView.INSTANCE.addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -30,6 +36,9 @@ public class ToolbarView extends HBox {
         goToPage.setOnAction(evt -> {
             new GoToPageDialog();
         });
+        Main.top.getScene().getAccelerators().put(
+                new KeyCodeCombination(KeyCode.G, KeyCombination.SHORTCUT_DOWN),
+                () -> goToPage.fire());
         getChildren().add(open);
         getChildren().add(outlineButton);
         getChildren().add(goToPage);

@@ -22,14 +22,13 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         top = primaryStage;
-        ToolbarView toolbar = new ToolbarView();
-        toolbar.setAccessibleRole(AccessibleRole.TOOL_BAR);
         BorderPane root = new BorderPane();
+        primaryStage.setScene(new Scene(root));
+        ToolbarView toolbar = new ToolbarView();
         root.setTop(toolbar);
         PDFView.INSTANCE.addListener((observable, oldValue, newValue) -> {
             root.setCenter(newValue);
         });
-        primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("Pdf Viewer");
         primaryStage.setMaximized(true);
         primaryStage.show();
