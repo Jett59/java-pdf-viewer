@@ -1,5 +1,6 @@
 package app.cleancode.java_pdf_viewer.ui.toolbar;
 
+import app.cleancode.java_pdf_viewer.ui.dialog.GoToPageDialog;
 import app.cleancode.java_pdf_viewer.ui.pdf.PDFView;
 import java.util.List;
 import com.itextpdf.kernel.pdf.PdfDictionary;
@@ -25,8 +26,13 @@ public class ToolbarView extends HBox {
                 }
             }
         });
+        Button goToPage = new Button("Jump to Page");
+        goToPage.setOnAction(evt -> {
+            new GoToPageDialog();
+        });
         getChildren().add(open);
         getChildren().add(outlineButton);
+        getChildren().add(goToPage);
         setAlignment(Pos.TOP_CENTER);
     }
 
