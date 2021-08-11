@@ -54,7 +54,12 @@ public class ToolbarView extends MenuBar {
     }
 
     private void addOutlineElements(Menu outlineMenu, PdfOutline outline) {
-        MenuItem outlineItem = new MenuItem();
+        MenuItem outlineItem;
+        if (outline.getAllChildren() != null && !outline.getAllChildren().isEmpty()) {
+            outlineItem = new Menu();
+        } else {
+            outlineItem = new MenuItem();
+        }
         int page = PDFView.INSTANCE.get()
                 .getPageNumber((PdfDictionary) outline.getDestination().getDestinationPage(
                         PDFView.INSTANCE.get().getCatalog().getNameTree(PdfName.Dests).getNames()));
@@ -66,7 +71,7 @@ public class ToolbarView extends MenuBar {
         List<PdfOutline> children = outline.getAllChildren();
         if (children != null) {
             for (PdfOutline child : children) {
-                addOutlineElements(outlineMenu, child);
+                addOutlineElements((Menu) outlineItem, child);
             }
         }
     }
