@@ -5,19 +5,22 @@ import app.cleancode.java_pdf_viewer.ui.pdf.PDFView;
 import app.cleancode.java_pdf_viewer.ui.toolbar.ToolbarView;
 import java.io.File;
 import javafx.application.Application;
-import javafx.geometry.Pos;
-import javafx.scene.AccessibleRole;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
     public static Stage top;
 
+    private static String commandLineDocumentPath = null;
+
     public static void main(String[] args) {
+        for (String arg : args) {
+            if (new File(arg).exists()) {
+                commandLineDocumentPath = arg;
+                break;
+            }
+        }
         launch(args);
     }
 
@@ -34,10 +37,21 @@ public class Main extends Application {
         primaryStage.setTitle("Pdf Viewer");
         primaryStage.setMaximized(true);
         primaryStage.show();
+        String documentPath = null;
+        int pageNumber = 0;
         if (PreferenceManager.isPresent(PreferenceManager.LAST_DOCUMENT)) {
-            PDFView.open(new File(PreferenceManager.getString(PreferenceManager.LAST_DOCUMENT)));
-            PDFView.INSTANCE.get()
-                    .selectPage(PreferenceManager.getInt(PreferenceManager.LAST_PAGE_NUMBER));
+            documentPath = PreferenceManager.getString(PreferenceManager.LAST_DOCUMENT);
+            pageNumber = PreferenceManager.getInt(PreferenceManager.LAST_PAGE_NUMBER);
+        }
+        if (commandLineDocumentPath != null) {
+            if (documentPath != commandLineDocumentPath) {
+                documentPath = commandLineDocumentPath;
+                pageNumber = 1;
+            }
+        }
+        if (documentPath != null) {
+            PDFView.open(new File(documentPath));
+            PDFView.INSTANCE.get().selectPage(pageNumber);
         }
     }
 
