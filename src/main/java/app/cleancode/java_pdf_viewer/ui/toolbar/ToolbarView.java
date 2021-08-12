@@ -22,7 +22,7 @@ public class ToolbarView extends MenuBar {
         Main.top.getScene().getAccelerators().put(
                 new KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN), () -> open.fire());
         Menu outlineMenu = new Menu();
-        outlineMenu.setText("Document _Outline");
+        outlineMenu.setText("Document Outline");
         PDFView.INSTANCE.addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 outlineMenu.getItems().clear();
