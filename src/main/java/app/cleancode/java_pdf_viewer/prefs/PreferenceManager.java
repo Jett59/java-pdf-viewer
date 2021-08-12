@@ -7,7 +7,8 @@ public class PreferenceManager {
             Preferences.userNodeForPackage(PreferenceManager.class);
 
     public static String LAST_DOCUMENT = "last_document";
-    public static String LAST_PAGE_NUMBER = "last_page_number";
+    // To be used with String.format()
+    public static String LAST_PAGE_NUMBER = "%s_last_page_number";
 
     public static void put(String key, String value) {
         preferences.put(key, value);

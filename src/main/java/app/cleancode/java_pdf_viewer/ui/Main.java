@@ -40,20 +40,16 @@ public class Main extends Application {
             primaryStage.setMaximized(true);
             primaryStage.show();
             String documentPath = null;
-            int pageNumber = 0;
             if (PreferenceManager.isPresent(PreferenceManager.LAST_DOCUMENT)) {
                 documentPath = PreferenceManager.getString(PreferenceManager.LAST_DOCUMENT);
-                pageNumber = PreferenceManager.getInt(PreferenceManager.LAST_PAGE_NUMBER);
             }
             if (commandLineDocumentPath != null) {
                 if (documentPath != commandLineDocumentPath) {
                     documentPath = commandLineDocumentPath;
-                    pageNumber = 1;
                 }
             }
             if (documentPath != null && new File(documentPath).exists()) {
                 PDFView.open(new File(documentPath));
-                PDFView.INSTANCE.get().selectPage(pageNumber);
             }
         } catch (Throwable e) {
             new ErrorDialog(e);

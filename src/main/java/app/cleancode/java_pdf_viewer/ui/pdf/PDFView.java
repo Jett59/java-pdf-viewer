@@ -29,7 +29,8 @@ public class PDFView extends HBox {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             if (INSTANCE.get() != null) {
                 PreferenceManager.put(PreferenceManager.LAST_DOCUMENT, INSTANCE.get().path);
-                PreferenceManager.put(PreferenceManager.LAST_PAGE_NUMBER,
+                PreferenceManager.put(
+                        String.format(PreferenceManager.LAST_PAGE_NUMBER, INSTANCE.get().path),
                         INSTANCE.get().currentPage);
             }
         }));
@@ -88,7 +89,8 @@ public class PDFView extends HBox {
         this.pdf = pdf;
         textGenerator = new TextGenerator();
         pdfText.setEditable(false);
-        selectPage(1);
+        selectPage(
+                PreferenceManager.getInt(String.format(PreferenceManager.LAST_PAGE_NUMBER, path)));
         Button previous = new Button("_Previous Page");
         Button next = new Button("_Next Page");
         previous.setOnAction(evt -> {
@@ -104,7 +106,8 @@ public class PDFView extends HBox {
     }
 
     public void selectPage(int page) {
-        if (pdf.getNumberOfPages() >= page && page > 0) {
+        page = page > 0 ? page : 1;
+        if (pdf.getNumberOfPages() >= page) {
             try {
                 pdfText.requestFocus();
                 pdfText.setText(textGenerator.getText(pdf.getPage(page)));
