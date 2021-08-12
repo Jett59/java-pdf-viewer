@@ -8,7 +8,7 @@ jpackage \
 -d ./target/installer \
 --name "PdfViewer" \
 --input ./target/app \
---app-version "0.1" \
+--app-version "0.3" \
 --copyright "2021 Jett Thompson" \
 --vendor "Jett Thompson" \
 --main-jar java-pdf-viewer.jar \
@@ -17,4 +17,5 @@ jpackage \
 --win-shortcut \
 --win-menu \
 --win-dir-chooser \
---win-upgrade-uuid "afd078bf-cc02-47f8-8cba-c5dbdf33e1fe"
+--win-upgrade-uuid "afd078bf-cc02-47f8-8cba-c5dbdf33e1fe" \
+--verbose
