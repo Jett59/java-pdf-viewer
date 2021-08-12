@@ -11,6 +11,7 @@ jpackage \
 --app-version "0.3" \
 --copyright "2021 Jett Thompson" \
 --vendor "Jett Thompson" \
+--license-file LICENSE \
 --main-jar java-pdf-viewer.jar \
 --module-path ./target/app/lib \
 --add-modules javafx.controls,java.logging \
