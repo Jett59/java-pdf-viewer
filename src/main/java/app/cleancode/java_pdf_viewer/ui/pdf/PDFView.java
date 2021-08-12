@@ -3,6 +3,7 @@ package app.cleancode.java_pdf_viewer.ui.pdf;
 import app.cleancode.java_pdf_viewer.parser.TextGenerator;
 import app.cleancode.java_pdf_viewer.prefs.PreferenceManager;
 import app.cleancode.java_pdf_viewer.ui.Main;
+import app.cleancode.java_pdf_viewer.ui.dialog.ErrorDialog;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -51,8 +52,9 @@ public class PDFView extends HBox {
             pdf = new PdfDocument(pdfReader);
             INSTANCE.setValue(new PDFView(pdf, file.getAbsolutePath()));
             Main.top.setTitle(file.getName() + " - PDF Viewer");
-        } catch (Exception e) {
+        } catch (Throwable e) {
             e.printStackTrace();
+            new ErrorDialog(e);
             if (fileIn != null) {
                 try {
                     fileIn.close();
