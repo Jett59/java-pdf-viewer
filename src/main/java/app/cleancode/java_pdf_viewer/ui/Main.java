@@ -49,7 +49,7 @@ public class Main extends Application {
                 pageNumber = 1;
             }
         }
-        if (documentPath != null) {
+        if (documentPath != null && new File(documentPath).exists()) {
             PDFView.open(new File(documentPath));
             PDFView.INSTANCE.get().selectPage(pageNumber);
         }
