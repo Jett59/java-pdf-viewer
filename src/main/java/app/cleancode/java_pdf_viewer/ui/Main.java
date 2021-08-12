@@ -57,6 +57,7 @@ public class Main extends Application {
             }
         } catch (Throwable e) {
             new ErrorDialog(e);
+            System.exit(-1);
         }
     }
 
