@@ -8,7 +8,7 @@ jpackage \
 -d ./target/installer \
 --name "PdfViewer" \
 --input ./target/app \
---app-version "0.3.1" \
+--app-version "0.3.2" \
 --copyright "2021 Jett Thompson" \
 --vendor "Jett Thompson" \
 --license-file LICENSE \

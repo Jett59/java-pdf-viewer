@@ -13,6 +13,7 @@ import com.itextpdf.kernel.pdf.PdfDictionary;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfOutline;
 import com.itextpdf.kernel.pdf.PdfReader;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Pos;
@@ -89,8 +90,10 @@ public class PDFView extends HBox {
         this.pdf = pdf;
         textGenerator = new TextGenerator();
         pdfText.setEditable(false);
-        selectPage(
-                PreferenceManager.getInt(String.format(PreferenceManager.LAST_PAGE_NUMBER, path)));
+        Platform.runLater(() -> {
+            selectPage(PreferenceManager
+                    .getInt(String.format(PreferenceManager.LAST_PAGE_NUMBER, path)));
+        });
         Button previous = new Button("_Previous Page");
         Button next = new Button("_Next Page");
         previous.setOnAction(evt -> {
