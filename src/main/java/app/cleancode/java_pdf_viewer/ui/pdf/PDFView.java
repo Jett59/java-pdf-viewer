@@ -1,9 +1,5 @@
 package app.cleancode.java_pdf_viewer.ui.pdf;
 
-import app.cleancode.java_pdf_viewer.parser.TextGenerator;
-import app.cleancode.java_pdf_viewer.prefs.PreferenceManager;
-import app.cleancode.java_pdf_viewer.ui.Main;
-import app.cleancode.java_pdf_viewer.ui.dialog.ErrorDialog;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,6 +9,10 @@ import com.itextpdf.kernel.pdf.PdfDictionary;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfOutline;
 import com.itextpdf.kernel.pdf.PdfReader;
+import app.cleancode.java_pdf_viewer.parser.TextGenerator;
+import app.cleancode.java_pdf_viewer.prefs.PreferenceManager;
+import app.cleancode.java_pdf_viewer.ui.Main;
+import app.cleancode.java_pdf_viewer.ui.dialog.ErrorDialog;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -139,5 +139,13 @@ public class PDFView extends HBox {
 
     public int getPageNumber(PdfDictionary dictionary) {
         return pdf.getPageNumber(dictionary);
+    }
+
+    public String getText() {
+        return pdfText.getText();
+    }
+
+    public void setPosition(int charPosition) {
+        pdfText.positionCaret(charPosition);
     }
 }

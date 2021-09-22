@@ -1,12 +1,13 @@
 package app.cleancode.java_pdf_viewer.ui.toolbar;
 
-import app.cleancode.java_pdf_viewer.ui.Main;
-import app.cleancode.java_pdf_viewer.ui.dialog.GoToPageDialog;
-import app.cleancode.java_pdf_viewer.ui.pdf.PDFView;
 import java.util.List;
 import com.itextpdf.kernel.pdf.PdfDictionary;
 import com.itextpdf.kernel.pdf.PdfName;
 import com.itextpdf.kernel.pdf.PdfOutline;
+import app.cleancode.java_pdf_viewer.ui.Main;
+import app.cleancode.java_pdf_viewer.ui.dialog.FindInPageDialog;
+import app.cleancode.java_pdf_viewer.ui.dialog.GoToPageDialog;
+import app.cleancode.java_pdf_viewer.ui.pdf.PDFView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -39,6 +40,12 @@ public class ToolbarView extends MenuBar {
         goToPage.setOnAction(evt -> {
             new GoToPageDialog();
         });
+        MenuItem find = new MenuItem();
+        find.setText("Find in page");
+        find.setOnAction(evt -> {
+            new FindInPageDialog();
+        });
+        find.setAccelerator(new KeyCodeCombination(KeyCode.F, KeyCombination.SHORTCUT_DOWN));
         Main.top.getScene().getAccelerators().put(
                 new KeyCodeCombination(KeyCode.G, KeyCombination.SHORTCUT_DOWN),
                 () -> goToPage.fire());
@@ -48,6 +55,7 @@ public class ToolbarView extends MenuBar {
         viewMenu.getItems().add(outlineMenu);
         viewMenu.getItems().add(goTo);
         goTo.getItems().add(goToPage);
+        viewMenu.getItems().add(find);
         super.getMenus().add(fileMenu);
         super.getMenus().add(viewMenu);
         super.setFocusTraversable(true);
