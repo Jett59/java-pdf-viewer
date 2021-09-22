@@ -1,8 +1,10 @@
 package app.cleancode.java_pdf_viewer.ui.dialog;
 
-import javafx.scene.Group;
+import app.cleancode.java_pdf_viewer.ui.pdf.PDFView;
 import javafx.scene.Parent;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 
 public class FindInPageDialog extends DialogViewBase {
 
@@ -13,8 +15,18 @@ public class FindInPageDialog extends DialogViewBase {
 
     @Override
     protected Parent getRoot() {
-        Group root = new Group();
-        return root;
+        TextField text = new TextField();
+        registerButtonActionHandler(GoToPageDialog.GO_BUTTON, evt -> {
+            int position = PDFView.INSTANCE.get().getText().indexOf(text.getText());
+            if (position >= 0) {
+                PDFView.INSTANCE.get().setPosition(position);
+            } else {
+                evt.consume();
+                new ErrorDialog(
+                        new Exception("The string '" + text.getText() + "' could not be found"));
+            }
+        });
+        return new BorderPane(text);
     }
 
 }
