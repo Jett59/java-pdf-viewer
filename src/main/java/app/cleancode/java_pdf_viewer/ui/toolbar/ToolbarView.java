@@ -5,7 +5,7 @@ import com.itextpdf.kernel.pdf.PdfDictionary;
 import com.itextpdf.kernel.pdf.PdfName;
 import com.itextpdf.kernel.pdf.PdfOutline;
 import app.cleancode.java_pdf_viewer.ui.Main;
-import app.cleancode.java_pdf_viewer.ui.dialog.FindInPageDialogue;
+import app.cleancode.java_pdf_viewer.ui.dialog.FindInPageDialog;
 import app.cleancode.java_pdf_viewer.ui.dialog.GoToPageDialog;
 import app.cleancode.java_pdf_viewer.ui.pdf.PDFView;
 import javafx.scene.control.Menu;
@@ -43,7 +43,7 @@ public class ToolbarView extends MenuBar {
         MenuItem find = new MenuItem();
         find.setText("Find in page");
         find.setOnAction(evt -> {
-            new FindInPageDialogue();
+            new FindInPageDialog();
         });
         find.setAccelerator(new KeyCodeCombination(KeyCode.F, KeyCombination.SHORTCUT_DOWN));
         Main.top.getScene().getAccelerators().put(

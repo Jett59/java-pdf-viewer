@@ -4,9 +4,9 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.control.ButtonType;
 
-public class FindInPageDialogue extends DialogViewBase {
+public class FindInPageDialog extends DialogViewBase {
 
-    public FindInPageDialogue() {
+    public FindInPageDialog() {
         super("Find in page", "Type the text you want to find:", ButtonType.CANCEL,
                 GoToPageDialog.GO_BUTTON);
     }
