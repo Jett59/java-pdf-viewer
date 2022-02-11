@@ -16,7 +16,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 <dependency>
     <groupId>com.itextpdf</groupId>
     <artifactId>itext7-core</artifactId>
-    <version>7.1.16</version>
+    <version>7.2.0</version>
     <type>pom</type>
 </dependency>
 <dependency>
